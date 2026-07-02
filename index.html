@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Chat Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1e1e1e; color: white; padding: 20px; }
+        #chat-log { width: 100%; height: 300px; background: #2d2d2d; border: 1px solid #444; overflow-y: scroll; padding: 10px; margin-bottom: 10px; }
+        .message { margin-bottom: 8px; }
+        .meta { font-size: 0.8em; color: #888; margin-right: 10px; }
+        .username { font-weight: bold; color: #4CAF50; margin-right: 5px; }
+        input, button { padding: 10px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h2>Secure Room: <span id="user-display"></span></h2>
+    
+    <div id="chat-log"></div>
+    <input id="chat-message-input" type="text" size="50" placeholder="Type a message...">
+    <button id="chat-message-submit">Send</button>
+
+    <script>
+        // Prompt for username on load
+        let username = prompt("Enter your display name:");
+        if (!username) {
+            username = "Anonymous";
+        }
+        document.getElementById('user-display').innerText = username;
+
+        const chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/general/');
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const chatLog = document.querySelector('#chat-log');
+            
+            // Generate a live timestamp
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            // Format the message beautifully
+            chatLog.innerHTML += `
+                <div class="message">
+                    <span class="meta">[${timeString}]</span>
+                    <span class="username">${data.username}:</span>
+                    <span class="content">${data.message}</span>
+                </div>`;
+            chatLog.scrollTop = chatLog.scrollHeight;
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // Enter key
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            
+            // Send both the message AND the username to Django
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'username': username
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>
