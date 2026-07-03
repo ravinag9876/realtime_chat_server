@@ -28,23 +28,23 @@ A real-time messaging backend engineered with **Django** and **WebSockets**. Thi
 
 ### Setup & Launch
 Clone the repository:
-   ```bash
-   git clone [https://github.com/yourusername/realtime-chat-server.git](https://github.com/yourusername/realtime-chat-server.git)
-   cd realtime-chat-server
+```bash
+git clone [https://github.com/yourusername/realtime-chat-server.git](https://github.com/yourusername/realtime-chat-server.git)
+cd realtime-chat-server
 
 1.Activate a virtual environment and install dependencies:
-   ```bash
-
-   python -m venv venv
-   source venv/bin/activate  # (Or `venv\Scripts\activate` on Windows)
-   pip install -r requirements.txt
+```bash
+python -m venv venv
+source venv/bin/activate  # (Or `venv\Scripts\activate` on Windows)
+pip install -r requirements.txt
+```
 2.Run database migrations to construct the schema:
-   ```bash
-   python manage.py makemigrations chat
-   python manage.py migrate
-
+```bash
+python manage.py makemigrations chat
+python manage.py migrate
+```
 3.Start the ASGI Daphne server:
-   ```bash
-   python manage.py runserver
-
+```bash
+python manage.py runserver
+```
 4.Open the included index.html file in multiple web browser windows to test the real-time broadcasting and database persistence.
