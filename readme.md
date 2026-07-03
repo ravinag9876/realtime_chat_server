@@ -29,7 +29,7 @@ A real-time messaging backend engineered with **Django** and **WebSockets**. Thi
 ### Setup & Launch
 Clone the repository:
 ```bash
-git clone [https://github.com/ravinag9876/realtime_chat_server.git](https://github.com/ravinag9876/realtime_chat_server.git)
+git clone https://github.com/ravinag9876/realtime_chat_server.git
 cd realtime_chat_server
 ```
 1.Activate a virtual environment and install dependencies:
