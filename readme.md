@@ -33,15 +33,18 @@ Clone the repository:
    cd realtime-chat-server
 
 1.Activate a virtual environment and install dependencies:
-python -m venv venv
-source venv/bin/activate  # (Or `venv\Scripts\activate` on Windows)
-pip install -r requirements.txt
+   ```bash
 
+   python -m venv venv
+   source venv/bin/activate  # (Or `venv\Scripts\activate` on Windows)
+   pip install -r requirements.txt
 2.Run database migrations to construct the schema:
-python manage.py makemigrations chat
-python manage.py migrate
+   ```bash
+   python manage.py makemigrations chat
+   python manage.py migrate
 
 3.Start the ASGI Daphne server:
-python manage.py runserver
+   ```bash
+   python manage.py runserver
 
 4.Open the included index.html file in multiple web browser windows to test the real-time broadcasting and database persistence.
